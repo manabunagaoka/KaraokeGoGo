@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* COLOR CUSTOMIZATION 
+    * Use standard HEX colors to customize the theme
+    * Format: #RRGGBB where:
+    * RR: Red value (00-FF)
+    * GG: Green value (00-FF)
+    * BB: Blue value (00-FF)
+    */
+    
+    /* Main background color - light lavender */
+    --background: #F8F5FF;
+    
+    /* Main text color - deep purple */
+    --foreground: #2D1B3D;
+    
+    /* Primary action color (buttons, etc.) - green */
+    --primary: #29B465;          /* Change this for main button color */
+    --primary-foreground: #FFFFFF;
+    
+    /* Secondary accent color - purple */
+    --secondary: #9B7AEA;
+    
+    /* Accent color - warm yellow */
+    --accent: #FFD060;
+    
+    /* Border radius for rounded corners */
+    --radius: 1rem;
+  }
+}
+
+/* Rest of the CSS remains the same */
+@layer base {
+  html {
+    @apply text-base antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen max-w-screen overflow-x-hidden;
+  }
+
+  .container {
+    @apply px-4 mx-auto w-full;
+    @apply sm:px-6 md:px-8 lg:px-10;
+    max-width: min(100%, 1200px);
+  }
+
+  /* Rest of the styles... */
+}
