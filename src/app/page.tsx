@@ -1,8 +1,28 @@
-export default function Home() {
+'use client';
+
+import { Karaoke } from '@/components/Karaoke';
+import NavBar from '@/components/NavBar';
+import { useUser, SignIn } from '@clerk/nextjs';
+import { FC } from 'react';
+
+interface HomeProps {}
+
+const Home: FC<HomeProps> = () => {
+  const { user, isLoaded } = useUser();
+  
   return (
-    <main className="min-h-screen p-8">
-      <h1 className="text-4xl font-bold mb-8">Rap Synthesizer</h1>
-      {/* RapSynthesizer component will be added here */}
-    </main>
-  )
-}
+    <>
+      <NavBar />
+      <main className="min-h-screen px-4 py-6 sm:p-8">
+        {user && <Karaoke userId={user.id} />}
+        {!user && isLoaded && (
+          <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
+            <SignIn />
+          </div>
+        )}
+      </main>
+    </>
+  );
+};
+
+export default Home;

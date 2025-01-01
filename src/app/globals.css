@@ -1,53 +1,155 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-@layer base {
-  :root {
-    /* COLOR CUSTOMIZATION 
-    * Use standard HEX colors to customize the theme
-    * Format: #RRGGBB where:
-    * RR: Red value (00-FF)
-    * GG: Green value (00-FF)
-    * BB: Blue value (00-FF)
-    */
-    
-    /* Main background color - light lavender */
-    --background: #F8F5FF;
-    
-    /* Main text color - deep purple */
-    --foreground: #2D1B3D;
-    
-    /* Primary action color (buttons, etc.) - green */
-    --primary: #29B465;          /* Change this for main button color */
-    --primary-foreground: #FFFFFF;
-    
-    /* Secondary accent color - purple */
-    --secondary: #9B7AEA;
-    
-    /* Accent color - warm yellow */
-    --accent: #FFD060;
-    
-    /* Border radius for rounded corners */
-    --radius: 1rem;
-  }
+
+:root {
+  --background: 0, 0, 0;
+  --foreground: 255, 255, 255;
 }
 
-/* Rest of the CSS remains the same */
-@layer base {
-  html {
-    @apply text-base antialiased;
-  }
-
-  body {
-    @apply bg-background text-foreground min-h-screen max-w-screen overflow-x-hidden;
-  }
-
-  .container {
-    @apply px-4 mx-auto w-full;
-    @apply sm:px-6 md:px-8 lg:px-10;
-    max-width: min(100%, 1200px);
-  }
-
-  /* Rest of the styles... */
+body {
+  @apply bg-black text-white;
 }
+
+/* Clerk Authentication Styling */
+.cl-formButtonPrimary {
+  @apply bg-accent hover:bg-accent/90 !important;
+}
+
+.cl-card {
+  @apply bg-dark-800 !important;
+}
+
+.cl-formFieldInput {
+  @apply bg-dark-700 border-dark-600 text-gray-100 !important;
+}
+
+.cl-headerTitle, 
+.cl-headerSubtitle {
+  @apply text-white !important;
+}
+
+.cl-footerText,
+.cl-footerActionText,
+.cl-footer,
+.cl-footerPages {
+  @apply text-gray-300 !important;
+}
+
+.cl-footerActionLink {
+  @apply text-accent hover:text-accent/90 !important;
+}
+
+.cl-dividerText {
+  @apply text-gray-400 !important;
+}
+
+.cl-dividerLine {
+  @apply bg-dark-600 !important;
+}
+
+.cl-socialButtonsBlockButton {
+  @apply border border-dark-600 hover:border-accent !important;
+  @apply text-gray-300 hover:text-accent !important;
+}
+
+.cl-formFieldLabel {
+  @apply text-gray-300 !important;
+}
+
+.cl-identityPreviewText,
+.cl-identityPreviewEditButton {
+  @apply text-gray-300 !important;
+}
+
+.cl-identityPreviewEditButton:hover {
+  @apply text-accent !important;
+}
+
+.cl-formFieldInputShowPasswordButton {
+  @apply text-gray-400 hover:text-accent !important;
+}
+
+.cl-formResendCodeLink {
+  @apply text-accent hover:text-accent/90 !important;
+}
+
+/* Updated selectors for "Use Email/Phone" toggle */
+.cl-internal-1xp65yc {
+  @apply text-accent hover:text-accent/90 !important;
+}
+
+/* Phone country code and dropdown fixes */
+.cl-internal-15amzqo,
+.cl-internal-13zx4h7 {
+  @apply text-white !important;
+}
+
+.cl-internal-b1ndq49 {
+  @apply text-white !important;
+}
+
+div[class*="cl-internal"] button[aria-label="Select country"] * {
+  @apply text-white !important;
+}
+
+.cl-internal-b3fm6y {
+  @apply bg-dark-800 !important;
+}
+
+.cl-internal-1qv4kmt {
+  @apply text-gray-300 !important;
+}
+
+/* Override any light theme colors that might show up */
+.cl-formFieldInput::placeholder {
+  @apply text-gray-400 !important;
+}
+
+.cl-formButtonPrimary:disabled {
+  @apply opacity-50 cursor-not-allowed !important;
+}
+
+/* Error states */
+.cl-alert {
+  @apply bg-dark-700 border-red-500 text-red-400 !important;
+}
+
+/* Success states */
+.cl-success {
+  @apply text-green-400 !important;
+}
+
+/* Additional footer text fixes */
+.cl-footerActionText span,
+.cl-footerPages span {
+  @apply text-gray-300 !important;
+}
+
+/* Fix for the "No account?" text specifically */
+.cl-footerPages,
+.cl-footerPages * {
+  @apply text-gray-300 !important;
+}
+
+/* Additional specific fixes for country code and toggle */
+button[data-login-method],
+a[data-login-method] {
+  @apply text-accent hover:text-accent/90 !important;
+}
+
+.cl-internal-uyu30o {
+  @apply text-white !important;
+}
+
+.cl-internal-1jg1m8n {
+  @apply text-white !important;
+}
+
+/* Ensure the country code text and all its children are white */
+[role="combobox"] *,
+[role="combobox"] span,
+[role="combobox"] div {
+  @apply text-white !important;
+}
+

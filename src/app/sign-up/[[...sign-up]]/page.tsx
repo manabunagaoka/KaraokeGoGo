@@ -1,10 +1,10 @@
 'use client';
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <SignIn 
+      <SignUp 
         appearance={{
           variables: {
             colorPrimary: '#FF4081',

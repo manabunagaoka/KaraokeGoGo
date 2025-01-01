@@ -1,24 +1,36 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { Upload, Play, Pause, Mic, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import React, { useRef, useState, useEffect, FC } from 'react';
+import { 
+  Upload, 
+  SkipBack, 
+  SkipForward, 
+  Play, 
+  Pause, 
+  Mic, 
+  Volume2, 
+  MoreVertical, 
+  Settings, 
+  Share2, 
+  Info 
+} from 'lucide-react';
 
-interface RapSynthesizerProps {
-  userId?: string | null;
+export interface KaraokeProps {
+  userId: string;
 }
 
-export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
-  // All states together at the top of the component
-  const [audioFile, setAudioFile] = useState<string | null>(null);
+export const Karaoke: FC<KaraokeProps> = ({ userId }) => {
+  // State declarations
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioFile, setAudioFile] = useState<string>('');
   const [audioFileName, setAudioFileName] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Time formatting helper function
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -27,8 +39,8 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
 
   return (
     <div className="min-h-screen pt-4">
-      <div className="max-w-4xl mx-auto flex flex-col gap-4 px-4">
-  
+      <div className="max-w-4xl mx-auto flex flex-col gap-4">
+
         {/* Upload and Player Section */}
         <div className="bg-dark-800 rounded-lg p-4">
           {/* Upload Area */}
@@ -57,7 +69,7 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
               </span>
             </label>
           </div>
-  
+
           {/* Audio Controls */}
           <div className="bg-dark-700 rounded-lg p-4 mt-3">
             <audio
@@ -75,7 +87,6 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
               }}
               className="hidden"
             />
-  
             {/* Progress Bar */}
             <div 
               className="h-2 bg-dark-600 rounded-full mb-4 cursor-pointer"
@@ -92,13 +103,13 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
                 style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
               />
             </div>
-  
+
             {/* Time Display */}
             <div className="flex justify-between text-xs text-gray-400 mb-4">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(duration)}</span>
             </div>
-  
+
             {/* Control Buttons */}
             <div className="flex items-center justify-center gap-4">
               <button 
@@ -111,7 +122,7 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
               >
                 <SkipBack className="w-5 h-5" />
               </button>
-  
+
               <button 
                 onClick={() => {
                   if (isRecording) {
@@ -138,7 +149,7 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
                   )
                 )}
               </button>
-  
+
               <button 
                 onClick={() => {
                   if (audioRef.current) {
@@ -150,7 +161,7 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
                 <SkipForward className="w-5 h-5" />
               </button>
             </div>
-  
+
             {/* Volume Control */}
             <div className="flex items-center gap-2 mt-4 justify-center">
               <Volume2 className="w-5 h-5 text-gray-300" />
@@ -177,7 +188,7 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
             </div>
           </div>
         </div>
-  
+
         {/* Ranking Chart Section */}
         <div className="bg-dark-800 rounded-lg p-4">
           <h2 className="text-xl font-semibold mb-4">Ranking Chart</h2>
@@ -201,5 +212,4 @@ export default function RapSynthesizer({ userId }: RapSynthesizerProps) {
       </div>
     </div>
   );
-}
-
+};
