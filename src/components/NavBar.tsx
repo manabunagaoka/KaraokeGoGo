@@ -2,11 +2,25 @@
 
 import { useState } from 'react';
 import { Menu, X, Music, Trophy, User, LogOut } from 'lucide-react';
-import { useUser, SignOutButton } from "@clerk/nextjs";
+import { useUser, SignOutButton, useClerk } from "@clerk/nextjs";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
+  const clerk = useClerk();
+
+  // Add debug logging for sign out
+  const handleSignOut = async () => {
+    try {
+      console.log("Attempting to sign out...");
+      setIsMenuOpen(false);
+      await clerk.signOut();
+      console.log("Sign out successful");
+      window.location.href = '/sign-in';
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
+  };
 
   if (!isLoaded) {
     return null;
@@ -51,12 +65,13 @@ const NavBar = () => {
                 <User className="w-5 h-5 mr-3" />
                 {user?.username || user?.firstName || 'User'}
               </div>
-              <SignOutButton>
-                <button className="w-full p-3 flex items-center rounded-lg text-accent hover:bg-dark-700 hover:text-accent-hover">
-                  <LogOut className="w-5 h-5 mr-3" />
-                  Sign Out
-                </button>
-              </SignOutButton>
+              <button 
+                className="w-full p-3 flex items-center rounded-lg text-accent hover:bg-dark-700 hover:text-accent-hover"
+                onClick={handleSignOut}
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Sign Out
+              </button>
             </div>
           </div>
         )}
