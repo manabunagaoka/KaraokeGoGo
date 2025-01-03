@@ -153,3 +153,23 @@ a[data-login-method] {
   @apply text-white !important;
 }
 
+/* Add these at the bottom of your globals.css file */
+.cl-selectButton__countryCode,
+.cl-selectButton__countryCode p,
+.cl-selectButton__countryCode svg,
+.cl-internal-mladhl,
+.cl-internal-1uuhexx {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+
+/* Target specifically the SVG path */
+.cl-selectButton__countryCode svg path {
+  stroke: white !important;
+}
+
+/* Additional specificity for the text */
+button.cl-selectButton__countryCode p.cl-internal-mladhl {
+  color: white !important;
+}

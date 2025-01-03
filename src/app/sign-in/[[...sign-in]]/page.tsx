@@ -1,11 +1,12 @@
 'use client';
 import { SignIn } from "@clerk/nextjs";
 
-export default function SignInPage() {
+export default function Page() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <SignIn 
         appearance={{
+          baseTheme: 'dark',  // Added this line to match sign-up page
           variables: {
             colorPrimary: '#FF4081',
             colorBackground: '#000000',
@@ -49,21 +50,14 @@ export default function SignInPage() {
             phoneNumberInput: {
               backgroundColor: '#374151',
               borderColor: '#4B5563',
-              '& input': {
+              color: 'white',
+              '& .cl-selectButton__countryCode': {
                 color: 'white !important',
+                '& p': { color: 'white !important' },
+                '& svg': { color: 'white !important' }
               },
-              '& select': {
-                color: 'white !important',
-              },
-              '& button': {
-                color: 'white !important',
-              },
-              '& span': {
-                color: 'white !important',
-              },
-              '& div': {
-                color: 'white !important',
-              }
+              '& .cl-internal-mladhl': { color: 'white !important' },
+              '& .cl-internal-1uuhexx': { color: 'white !important' }
             }
           }
         }}
