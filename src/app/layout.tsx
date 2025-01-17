@@ -1,4 +1,3 @@
-// The CSS import is not needed anymore as it's included in the ClerkProvider
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'

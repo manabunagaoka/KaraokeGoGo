@@ -48,6 +48,11 @@ export default function Page() {
             },
             footerActionLink: {
               color: '#FF4081',
+              textDecoration: 'none',
+            },
+            alternativeMethodsBlockButton: {
+              color: '#FF4081 !important',  // "Use phone" link
+              textDecoration: 'none',
             },
             phoneNumberInput: {
               backgroundColor: '#374151',
@@ -69,33 +74,73 @@ export default function Page() {
             },
             formFieldSuccessText: {
               color: '#4CAF50 !important',
+            },
+            verifyPasswordText: {
+              color: '#4CAF50 !important',
+            },
+            passwordStrengthText: {
+              color: '#4CAF50 !important',
+            },
+            passwordRequirementsText: {
+              color: '#4CAF50 !important',
+            },
+            otpInput: {
+              backgroundColor: '#374151',
+              borderColor: '#4B5563',
+              color: 'white !important',
+            },
+            identityPreviewText: {
+              color: 'white !important',
+            },
+            identityPreviewEditButton: {
+              color: '#FF4081 !important',
+            },
+            formFieldAction: {
+              color: '#FF4081 !important',
+            },
+            // Additional verification styles
+            verificationCodeInput: {
+              backgroundColor: '#374151',
+              color: 'white !important',
+              borderColor: '#4B5563',
+            },
+            input: {
+              backgroundColor: '#374151',
+              color: 'white',
+            },
+            dividerText: {
+              color: '#9CA3AF',
+            },
+            formResendCodeLink: {
+              color: '#FF4081 !important',
+            }
+          }
+        }}
+        localization={{
+          signUp: {
+            start: {
+              title: "Create your account",
+              subtitle: "to continue to KaraokeGoGo"
+            },
+            verifyEmailCode: {
+              title: "Verify your email",
+              subtitle: "Enter the verification code sent to your email",
+              resendButton: "Didn't receive a code? Resend"
+            },
+            verifyPhoneCode: {
+              title: "Verify your phone number",
+              subtitle: "Enter the verification code sent to your phone",
+              resendButton: "Didn't receive a code? Resend"
             }
           }
         }}
         path="/sign-up"
         routing="path"
         signInUrl="/sign-in"
-        afterSignUpUrl="/dashboard"
-        initialValues={{
-          emailAddress: "",
-          phoneNumber: ""
-        }}
-        formFieldsConfig={{
-          emailAddress: {
-            type: "email",
-            required: false
-          },
-          phoneNumber: {
-            type: "tel",
-            required: false
-          },
-          password: {
-            type: "password",
-            required: true
-          }
-        }}
+        afterSignUpUrl="/policy"
+        redirectUrl="/policy"
         signUpConfig={{
-          authenticateWith: "any"
+          authenticateWith: "email_or_phone"
         }}
       />
     </div>

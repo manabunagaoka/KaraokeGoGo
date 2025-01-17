@@ -3,12 +3,23 @@
 import { Karaoke } from '@/components/Karaoke';
 import NavBar from '@/components/NavBar';
 import { useUser, SignIn } from '@clerk/nextjs';
-import { FC } from 'react';
+import { useRouter } from 'next/navigation';
+import { FC, useEffect } from 'react';
 
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
   const { user, isLoaded } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      const policyAccepted = localStorage.getItem('policyAgreed');
+      if (policyAccepted !== 'true') {
+        router.push('/policy');
+      }
+    }
+  }, [user, router]);
   
   return (
     <>
