@@ -20,7 +20,7 @@ const Home: FC<HomeProps> = () => {
       }
     }
   }, [user, router]);
-  
+
   return (
     <>
       <NavBar />
