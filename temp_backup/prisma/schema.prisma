@@ -1,0 +1,65 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id // This will match Clerk's user ID
+  bio           String?   @db.Text
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // App preferences
+  preferences    UserPreferences?
+  
+  // Relations
+  songs          FavoriteSong[]
+  playlists      Playlist[]
+}
+
+model UserPreferences {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Display preferences
+  theme           String    @default("dark")    // Matching your dark theme default
+  
+  // Karaoke preferences
+  defaultPitch    Int       @default(0)
+  defaultTempo    Int       @default(100)
+  audioQuality    String    @default("high")
+  
+  // Notification settings
+  emailNotifications  Boolean   @default(true)
+  pushNotifications   Boolean   @default(true)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model FavoriteSong {
+  id        String   @id @default(cuid())
+  userId    String
+  songId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, songId])
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  name        String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  songs       String[] // Array of song IDs
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

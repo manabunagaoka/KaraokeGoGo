@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,10 +7,22 @@
   --background: 0, 0, 0;
   --foreground: 255, 255, 255;
 }
-
 body {
   @apply bg-black text-white;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Rest of your existing Clerk styles... */
 
 /* Clerk Authentication Styling */
 .cl-formButtonPrimary {
@@ -24,6 +37,17 @@ body {
   @apply bg-dark-700 border-dark-600 text-gray-100 !important;
 }
 
+/* Add these new styles for verification code input */
+.cl-verificationCodeInput,
+.cl-verificationCodeInput input {
+  @apply bg-dark-700 text-white border-dark-600 !important;
+}
+
+.cl-verificationCodeInput input:focus {
+  @apply border-accent !important;
+}
+
+/* Your existing styles */
 .cl-headerTitle, 
 .cl-headerSubtitle {
   @apply text-white !important;
@@ -154,8 +178,8 @@ a[data-login-method] {
 }
 
 /* Add these at the bottom of your globals.css file */
-.cl-selectButton__countryCode,
-.cl-selectButton__countryCode p,
+.cl-selectButtoncountryCode,
+.cl-selectButtoncountryCode p,
 .cl-selectButton__countryCode svg,
 .cl-internal-mladhl,
 .cl-internal-1uuhexx {
@@ -172,4 +196,54 @@ a[data-login-method] {
 /* Additional specificity for the text */
 button.cl-selectButton__countryCode p.cl-internal-mladhl {
   color: white !important;
+}
+
+/* Device section overrides */
+.cl-userProfile-root .cl-active-devices-list {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.cl-userProfile-root .cl-device-item {
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  gap: 1rem !important;
+  align-items: center !important;
+  padding: 1rem !important;
+  width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .cl-userProfile-root .cl-device-item {
+    grid-template-columns: auto 1fr !important;
+    grid-template-rows: auto auto !important;
+  }
+
+  .cl-userProfile-root .cl-device-info {
+    font-size: 0.875rem !important;
+    grid-column: 2 / -1 !important;
+  }
+
+  .cl-userProfile-root .cl-device-badge {
+    grid-column: 2 / -1 !important;
+    justify-self: start !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+/* Ensure text doesn't overflow */
+.cl-userProfile-root .cl-device-info {
+  white-space: normal !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Add this at the end of your globals.css file */
+a[href^="tel:"],
+a[href^="mailto:"] {
+    pointer-events: none !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
 }

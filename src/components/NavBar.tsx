@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X, Music, Trophy, User, LogOut } from 'lucide-react';
-import { useUser, SignOutButton, useClerk } from "@clerk/nextjs";
+import { Menu, X, Music, Trophy, User, Settings, LogOut } from 'lucide-react';
+import { useUser, useClerk } from "@clerk/nextjs";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
   const clerk = useClerk();
+  const pathname = usePathname();
 
-  // Add debug logging for sign out
   const handleSignOut = async () => {
     try {
       console.log("Attempting to sign out...");
@@ -25,6 +27,13 @@ const NavBar = () => {
   if (!isLoaded) {
     return null;
   }
+
+  const menuItems = [
+    { href: '/library', icon: Music, label: 'Library' },
+    { href: '/rankings', icon: Trophy, label: 'Rankings' },
+    { href: '/settings/account', icon: User, label: 'Account' },
+    { href: '/settings', icon: Settings, label: 'Settings' }
+  ];
 
   return (
     <>
@@ -43,28 +52,30 @@ const NavBar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu - Only show when signed in */}
+        {/* Mobile Menu */}
         {isSignedIn && isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-dark-800 border-b border-dark-600 shadow-lg">
             <div className="px-4 py-2 space-y-1">
-              <button 
-                className="w-full p-3 flex items-center rounded-lg text-gray-100 hover:bg-dark-700 active:bg-dark-600"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Music className="w-5 h-5 mr-3" />
-                Library
-              </button>
-              <button 
-                className="w-full p-3 flex items-center rounded-lg text-gray-100 hover:bg-dark-700 active:bg-dark-600"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Trophy className="w-5 h-5 mr-3" />
-                Rankings
-              </button>
-              <div className="p-3 flex items-center text-gray-300">
-                <User className="w-5 h-5 mr-3" />
-                {user?.username || user?.firstName || 'User'}
-              </div>
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`w-full p-3 flex items-center rounded-lg ${
+                      pathname === item.href
+                        ? 'text-accent bg-dark-700'
+                        : 'text-gray-100 hover:bg-dark-700 active:bg-dark-600'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 mr-3" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+
+              {/* Sign Out Button */}
               <button 
                 className="w-full p-3 flex items-center rounded-lg text-accent hover:bg-dark-700 hover:text-accent-hover"
                 onClick={handleSignOut}
