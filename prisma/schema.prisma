@@ -1,102 +1,39 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Add these models to your existing schema
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// Main user model that connects with Clerk
-model User {
-  id            String         @id // This will store Clerk's user ID
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  email         String        // Primary email from Clerk
-  preferences   UserPreference?
-  profile       UserProfile?
-  // Rap synthesizer specific fields
-  rapperName    String?       // Artist name for the user
-  createdRaps   CreatedRap[]
-  favorites     FavoriteRap[]
-}
-
-// User preferences model
-model UserPreference {
-  id                    String    @id @default(cuid())
-  userId                String    @unique
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  theme                 String    @default("light") // light/dark mode
-  emailNotifications    Boolean   @default(true)
-  defaultRapStyle       String    @default("modern") // modern/old_school/trap etc.
-  defaultBeatTempo      Int       @default(90) // BPM
-  autoSaveEnabled       Boolean   @default(true)
-  language             String    @default("en")
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
-}
-
-// User profile model for additional profile data
-model UserProfile {
-  id              String    @id @default(cuid())
-  userId          String    @unique
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  displayName     String?
-  bio             String?   @db.Text
-  avatarUrl       String?
-  location        String?
-  website         String?
-  socialLinks     Json?     // Store social media links as JSON
-  experience      String    @default("beginner") // beginner/intermediate/advanced
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-}
-
-// Model for storing created raps
-model CreatedRap {
+model Role {
   id          String    @id @default(cuid())
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title       String
-  content     String    @db.Text
-  style       String
-  tempo       Int
-  isPublic    Boolean   @default(false)
+  name        String    @unique
+  description String?
+  permissions String[]
+  users       UserRole[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  favorites   FavoriteRap[]
-
-  @@index([userId])
-  @@index([createdAt])
 }
 
-// Model for favorite raps
-model FavoriteRap {
-  id          String    @id @default(cuid())
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
-  rapId       String
-  rap         CreatedRap @relation(fields: [rapId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-
-  @@unique([userId, rapId])
-  @@index([userId])
-  @@index([rapId])
-}
-
-// Activity log for user actions
-model UserActivityLog {
-  id        String    @id @default(cuid())
+model UserRole {
+  id        String   @id @default(cuid())
   userId    String
-  action    String    // e.g., "created_rap", "updated_preferences", "favorited_rap"
-  details   Json?     // Additional details about the action
-  ipAddress String?
-  userAgent String?
-  createdAt DateTime  @default(now())
+  roleId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  @@unique([userId, roleId])
   @@index([userId])
-  @@index([createdAt])
+  @@index([roleId])
+}
+
+// Update your existing User model
+model User {
+  id            String    @id
+  isAdmin       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  metadata      Json?     // Add this field for custom user metadata
+  roles         UserRole[] // Add this relation
+  recordings    Recording[]
+  favorites     Favorite[]
+  comments      Comment[]
+  ratings       Rating[]
 }

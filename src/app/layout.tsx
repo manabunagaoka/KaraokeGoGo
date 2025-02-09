@@ -2,8 +2,10 @@ import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import NavBar from '@/components/NavBar'  // Updated import path
 
 const inter = Inter({ subsets: ['latin'] })
+// ... rest of your layout code
 
 export const metadata: Metadata = {
   title: 'KaraokeGoGo',
@@ -42,6 +44,7 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={`${inter.className} bg-dark-900 text-white`}>
+          <NavBar /> {/* Add this line */}
           {children}
         </body>
       </html>
