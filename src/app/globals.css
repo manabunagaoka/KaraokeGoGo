@@ -247,3 +247,22 @@ a[href^="mailto:"] {
     color: inherit !important;
     -webkit-text-fill-color: inherit !important;
 }
+
+/* Custom scrollbar styles */
+.bg-[#374151]::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bg-[#374151]::-webkit-scrollbar-track {
+  background: #1F2937;
+  border-radius: 4px;
+}
+
+.bg-[#374151]::-webkit-scrollbar-thumb {
+  background: #FF4081;
+  border-radius: 4px;
+}
+
+.bg-[#374151]::-webkit-scrollbar-thumb:hover {
+  background: #ff1f69;
+}

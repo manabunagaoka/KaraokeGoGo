@@ -1,13 +1,36 @@
-// Add these models to your existing schema
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Song {
+  id          String      @id @default(cuid())
+  title       String
+  artist      String
+  createdAt   DateTime    @default(now())
+  userId      String
+  description String?
+  recordings  Recording[]
+  favorites   Favorite[]
+  comments    Comment[]
+  ratings     Rating[]
+}
 
 model Role {
-  id          String    @id @default(cuid())
-  name        String    @unique
+  id          String     @id @default(cuid())
+  name        String     @unique
   description String?
   permissions String[]
   users       UserRole[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model UserRole {
@@ -24,16 +47,71 @@ model UserRole {
   @@index([roleId])
 }
 
-// Update your existing User model
 model User {
-  id            String    @id
-  isAdmin       Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  metadata      Json?     // Add this field for custom user metadata
-  roles         UserRole[] // Add this relation
+  id            String      @id
+  isAdmin       Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  metadata      Json?       // For custom user metadata
+  roles         UserRole[]
   recordings    Recording[]
   favorites     Favorite[]
   comments      Comment[]
   ratings       Rating[]
+}
+
+model Recording {
+  id        String   @id @default(cuid())
+  songId    String
+  userId    String
+  fileUrl   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([songId])
+  @@index([userId])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  songId    String
+  userId    String
+  createdAt DateTime @default(now())
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, songId])
+  @@index([songId])
+  @@index([userId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  songId    String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([songId])
+  @@index([userId])
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  value     Int
+  songId    String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, songId])
+  @@index([songId])
+  @@index([userId])
 }

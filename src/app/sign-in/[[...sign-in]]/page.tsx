@@ -1,12 +1,8 @@
 'use client';
 
-import { useUser, SignIn } from '@clerk/nextjs';
+import { SignIn } from "@clerk/nextjs";
 
-export default function Home() {
-  const { isLoaded } = useUser();
-
-  console.log('Rendering home page');
-
+export default function Page() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
       <SignIn 
@@ -28,6 +24,36 @@ export default function Home() {
             card: {
               backgroundColor: '#1F2937',
               borderRadius: '0.5rem',
+            },
+            headerTitle: {
+              color: 'white',
+            },
+            headerSubtitle: {
+              color: '#9CA3AF',
+            },
+            formFieldInput: {
+              backgroundColor: '#374151',
+              borderColor: '#4B5563',
+              color: 'white',
+            },
+            formFieldLabel: {
+              color: '#9CA3AF',
+            },
+            footer: {
+              color: '#9CA3AF',
+            },
+            footerActionLink: {
+              color: '#FF4081',
+              textDecoration: 'none',
+            },
+            alternativeMethodsBlockButton: {
+              color: '#FF4081 !important',  // "Use phone" link
+              textDecoration: 'none',
+            },
+            phoneNumberInput: {
+              backgroundColor: '#374151',
+              borderColor: '#4B5563',
+              color: 'white',
             }
           }
         }}

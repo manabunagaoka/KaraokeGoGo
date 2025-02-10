@@ -17,5 +17,5 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [] // Remove the forms plugin
 };
